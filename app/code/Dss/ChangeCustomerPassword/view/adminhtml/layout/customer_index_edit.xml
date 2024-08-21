@@ -1,0 +1,26 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Digit Software Solutions..
+ *
+ * NOTICE OF LICENSE
+ *
+ * This source file is subject to the EULA
+ * that is bundled with this package in the file LICENSE.txt.
+ *
+ * @category   Dss
+ * @package    Dss_ChangeCustomerPassword
+ * @author     Extension Team
+ * @copyright Copyright (c) 2024 Digit Software Solutions. ( https://digitsoftsol.com )
+ */
+-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+      xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Dss\ChangeCustomerPassword\Block\Adminhtml\Customer\PasswordChange"
+                   name="customer_change_password"
+                   template="Dss_ChangeCustomerPassword::customer/password_change.phtml"/>
+        </referenceContainer>
+    </body>
+</page>
