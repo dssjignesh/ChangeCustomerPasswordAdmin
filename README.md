@@ -1,7 +1,5 @@
 # Change Customer Password In Admin - Magento 2
 
-    composer require ghoster/changecustomerpassword
-
 Change Customer Password In Admin Magento 2 module is implements the form in customer edit which allow admin change
 customer password directly like old-fashion way Magento.
 
