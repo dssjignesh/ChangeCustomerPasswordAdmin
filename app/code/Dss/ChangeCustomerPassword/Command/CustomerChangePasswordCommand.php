@@ -47,6 +47,7 @@ class CustomerChangePasswordCommand extends Command
         private CustomerResource $resource,
         private AppState $state
     ) {
+        parent::__construct();
     }
 
     /**
