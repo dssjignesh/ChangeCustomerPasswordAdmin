@@ -34,6 +34,13 @@ use Symfony\Component\Console\Output\OutputInterface;
 class CustomerChangePasswordCommand extends Command
 {
     /**
+     * Input for password
+     *
+     * @var InputInterface
+     */
+    private $input;
+
+    /**
      * CustomerChangePasswordCommand constructor
      *
      * @param CustomerFactory $customerFactory
@@ -74,21 +81,24 @@ class CustomerChangePasswordCommand extends Command
      *
      * @param InputInterface $input
      * @param OutputInterface $output
-     * @return void
+     *
+     * @return int
      */
-    protected function execute(InputInterface $input, OutputInterface $output): void
+    protected function execute(InputInterface $input, OutputInterface $output): int
     {
         $this->input = $input;
-        try {
-            $this->appState->setAreaCode(Area::AREA_ADMINHTML);
-            // phpcs:ignore Magento2.CodeAnalysis.EmptyBlock.DetectedCatch
-        } catch (LocalizedException $exception) {
-        }
-
         $customer = $this->getCustomerByEmail($this->getEmail());
         $customer->setPassword($this->getPassword());
-        $this->customerResource->save($customer);
-        $output->writeln(sprintf('Updated password for customer "%s".', $this->getEmail()));
+        $this->resource->save($customer);
+        $exitCode = 0;
+        try {
+            $this->state->setAreaCode(Area::AREA_ADMINHTML);
+        } catch (LocalizedException $e) {
+            $output->writeln(sprintf('Updated password for customer "%s".', $this->getEmail()));
+            $exitCode = 1;
+        }
+
+        return $exitCode;
     }
 
     /**
@@ -152,7 +162,7 @@ class CustomerChangePasswordCommand extends Command
             $websiteId = $this->getWebsiteIdByCode($this->getWebsiteCode());
             $customer->setWebsiteId($websiteId);
         }
-        $this->customerResource->loadByEmail($customer, $email);
+        $this->resource->loadByEmail($customer, $email);
         if (!$customer->getId()) {
             throw new \InvalidArgumentException(sprintf('No customer with email "%s" found.', $this->getEmail()));
         }
